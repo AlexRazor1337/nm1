@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+}
+
+button {
+    margin-right: 5px;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+}
+

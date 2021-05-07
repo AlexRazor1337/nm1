@@ -8,6 +8,7 @@
 </head>
 <link rel="stylesheet" href="css/style.css">
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/index.js"></script>
     <div id="wrapper">
         <div id="outter_container">
@@ -15,6 +16,93 @@
                 <h2>Select mode:</h2>
                 <button onclick="mode(1)">Integral</button>
                 <button onclick="mode(2)">Differential equation</button>
+            </div>
+            <div id="integral" class="hidden">
+                <h1>Integral</h1>
+                <label for="i_m">Choose a method: </label>
+                <select id="i_m">
+                    <option value="1">Left rectangle approximation</option>
+                    <option value="2">Right rectangle approximation</option>
+                    <option value="3">Middle rectangle approximation</option>
+                    <option value="4">Trapezoidal rule</option>
+                    <option value="5">Simpson's rule</option>
+                </select>
+                <br>
+                <label for="i_f">Choose a target function:</label>
+                <select id="i_f">
+                    <option value="1">1 + x / 3</option>
+                    <option value="2">1 / ln(x)</option>
+                    <option value="3">sin(x)</option>
+                    <option value="4">exp(-x^2)</option>
+                </select>
+                <br>
+                <label for="i_a">a:</label>
+                <input type="text" id="i_a">
+                <label for="i_b">b:</label>
+                <input type="text" id="i_b">
+                <label for="i_N">N:</label>
+                <input type="text" id="i_N">
+                <br>
+                <center>
+                    <div id="i_results" class="hidden">
+                        <br>
+                        <table id="i_tabl">
+                            <thead>
+                                <th>Left rectangle</th>
+                                <th>Right rectangle</th>
+                                <th>Middle rectangle</th>
+                                <th>Trapezoidal</th>
+                                <th>Parabolic</th>
+                            </thead>
+                            <tbody id="i_vals">
+                            </tbody>
+                        </table>
+                    </div>
+                </center>
+                <br>
+                <div style="text-align: center;">
+                    <button onclick="solveI()">Solve</button>
+                    <button onclick="location.reload()">Back</button>
+                </div>
+
+            </div>
+
+            <div id="diffeq" class="hidden">
+                <h1>Differential equation</h1>
+                <label for="d_m">Choose a method: </label>
+                <select id="d_m">
+                    <option value="1">Euler method</option>
+                    <option value="2">Runge-Kutta (4)</option>
+                    <option value="3">Runge-Kutta (3)</option>
+                    <option value="4">Runge-Kutta (2)</option>
+                </select>
+                <br>
+                <label for="d_f">Choose a target function:</label>
+                <select id="d_f">
+                    <option value="1">y'=-xy</option>
+                    <option value="2">y'=y+x</option>
+                    <option value="3">y'=(3x-12x^2)y</option>
+                    <option value="4">y'=x^2-2y</option>
+                </select>
+                <br>
+                <label for="d_a">a:</label>
+                <input type="text" id="d_a">
+                <label for="d_b">b:</label>
+                <input type="text" id="d_b">
+                <br>
+                <label for="d_y0">y<sub>0</sub></label>
+                <input type="text" id="d_y0">
+                <label for="d_N">N:</label>
+                <input type="text" id="d_N">
+                <br>
+                <br>
+
+                <div style="text-align: center;">
+                    <button onclick="solveDE()">Solve</button>
+                    <button onclick="location.reload()">Back</button>
+                </div>
+
+                <canvas id="chart"></canvas>
             </div>
         </div>
     </div>

@@ -1,3 +1,5 @@
+let chart = null;
+
 function cpy(obj) {
     return JSON.parse(JSON.stringify(obj))
 }
@@ -73,6 +75,7 @@ function Euler(f, a, b, y0, N) {
         Y.push(Y[Y.length - 1] + h * f(X[X.length - 1], Y[Y.length - 1]))
     }
 
+
     return [X, Y];
 }
 
@@ -88,6 +91,7 @@ function Runge_Kutta2(f, a, b, y0, N) {
         X.push(a + h * i);
         Y.push(Y[Y.length - 1] + (h/6) * (k1 + 2 * k2))
     }
+
 
     return [X, Y];
 }
@@ -106,6 +110,7 @@ function Runge_Kutta3(f, a, b, y0, N) {
         Y.push(Y[Y.length - 1] + (h/6) * (k1 + 2 * k2 + 2 * k3))
     }
 
+
     return [X, Y];
 }
 
@@ -123,6 +128,7 @@ function Runge_Kutta4(f, a, b, y0, N) {
         X.push(a + h * i);
         Y.push(Y[Y.length - 1] + (h/6) * (k1 + 2 * k2 + 2 * k3 + k4))
     }
+
 
     return [X, Y];
 }
@@ -167,9 +173,14 @@ function solveI(){
         let method = parseInt(document.getElementById('i_m').value - 1);
         let func = parseInt(document.getElementById('i_f').value - 1);
         let answ = document.createElement('p');
+        if (document.getElementById('in_ans')) {
+            document.getElementById('in_ans').remove()
+        }
+        answ.id = "in_ans"
         answ.innerHTML= "Integral value using selected method: <b>" + integralMethods[method](integralFunctions[func], a, b, N).toFixed(5) + "</b>";
         document.getElementById('i_results').appendChild(answ);
-
+        
+        document.getElementById('i_vals').innerHTML = "";
         for (let i = 0; i < 5; i++) {
             let data = document.createElement('td');
             data.innerText = integralMethods[i](integralFunctions[func], a, b, N).toFixed(5)
@@ -202,22 +213,44 @@ function solveDE() {
 
         let result = diffEqlMethods[method](diffEqFunctions[func], a, b, y0, N);
         let x = result[0];
+        x.push(b);
         let y = result[1]
         console.log(result);
+        
+        if (chart) {
+            document.getElementById('de_table').innerHTML = "";
+            chart.destroy();
+        }
 
-        let chart = new Chart(document.getElementById('chart').getContext('2d'), {
+        chart = new Chart(document.getElementById('chart').getContext('2d'), {
             type: 'line',
             responsive:false,
             maintainAspectRatio: false,
             data: {
                 labels: x,
                 datasets: [{
-                    backgroundColor: 'rgb(37, 238, 245)',
+                    label: "y'",
+                    backgroundColor: 'rgb(5, 238, 30)',
                     borderColor: 'rgb(0, 0, 0)',
                     data: y
                 }]
             }
         })
+
+        for (let i = 0; i < x.length; i++) {
+            let tr = document.createElement('tr');
+            let td_x = document.createElement('td');
+            let td_y = document.createElement('td');
+            td_x.innerText = x[i];
+            td_y.innerText = y[i];
+
+            tr.appendChild(td_x);
+            tr.appendChild(td_y);
+
+            document.getElementById('de_table').appendChild(tr);
+        }
+
+        document.getElementById('de_results').classList.remove("hidden");
     } else {
         alert("Input all fields!")
     }

@@ -101,8 +101,23 @@
                     <button onclick="solveDE()">Solve</button>
                     <button onclick="location.reload()">Back</button>
                 </div>
-
-                <canvas id="chart"></canvas>
+                <div id="de_results"  class="hidden">
+                    <br>
+                    <canvas id="chart"></canvas>
+                    <br>
+                    <center>
+                        <table >
+                            <thead>
+                                <th>x</th>
+                                <th>y</th>
+                            </thead>
+                            <tbody id="de_table">
+    
+                            </tbody>
+                        </table>
+                    </center>
+                </div>
+                
             </div>
         </div>
     </div>
